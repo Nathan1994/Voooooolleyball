@@ -71,8 +71,9 @@
 		D878DC4D1B1CF1700066BF85 /* WelcomeBackgroundLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D878DC4B1B1CF1700066BF85 /* WelcomeBackgroundLayer.cpp */; };
 		D878DC501B1CF1AD0066BF85 /* WelcomeButtonLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D878DC4E1B1CF1AD0066BF85 /* WelcomeButtonLayer.cpp */; };
 		D878DC531B1CF6180066BF85 /* Welcome_Start_Game_Button.png in Resources */ = {isa = PBXBuildFile; fileRef = D878DC521B1CF6180066BF85 /* Welcome_Start_Game_Button.png */; };
+		D878DC561B1CFBE40066BF85 /* GameControlLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D878DC541B1CFBE40066BF85 /* GameControlLayer.cpp */; };
+		D878DC591B1CFD990066BF85 /* GamePlayerLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D878DC571B1CFD990066BF85 /* GamePlayerLayer.cpp */; };
 		D8B5696C1B13404F0006FC59 /* GameScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D8B5696A1B13404F0006FC59 /* GameScene.cpp */; };
-		D8B569701B1344CB0006FC59 /* GameTouchLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D8B5696E1B1344CA0006FC59 /* GameTouchLayer.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -172,10 +173,12 @@
 		D878DC4E1B1CF1AD0066BF85 /* WelcomeButtonLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WelcomeButtonLayer.cpp; sourceTree = "<group>"; };
 		D878DC4F1B1CF1AD0066BF85 /* WelcomeButtonLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WelcomeButtonLayer.h; sourceTree = "<group>"; };
 		D878DC521B1CF6180066BF85 /* Welcome_Start_Game_Button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Welcome_Start_Game_Button.png; sourceTree = "<group>"; };
+		D878DC541B1CFBE40066BF85 /* GameControlLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameControlLayer.cpp; sourceTree = "<group>"; };
+		D878DC551B1CFBE40066BF85 /* GameControlLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameControlLayer.h; sourceTree = "<group>"; };
+		D878DC571B1CFD990066BF85 /* GamePlayerLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GamePlayerLayer.cpp; sourceTree = "<group>"; };
+		D878DC581B1CFD990066BF85 /* GamePlayerLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GamePlayerLayer.h; sourceTree = "<group>"; };
 		D8B5696A1B13404F0006FC59 /* GameScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameScene.cpp; sourceTree = "<group>"; };
 		D8B5696B1B13404F0006FC59 /* GameScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameScene.h; sourceTree = "<group>"; };
-		D8B5696E1B1344CA0006FC59 /* GameTouchLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameTouchLayer.cpp; sourceTree = "<group>"; };
-		D8B5696F1B1344CB0006FC59 /* GameTouchLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameTouchLayer.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -391,8 +394,10 @@
 			children = (
 				D8B5696A1B13404F0006FC59 /* GameScene.cpp */,
 				D8B5696B1B13404F0006FC59 /* GameScene.h */,
-				D8B5696E1B1344CA0006FC59 /* GameTouchLayer.cpp */,
-				D8B5696F1B1344CB0006FC59 /* GameTouchLayer.h */,
+				D878DC541B1CFBE40066BF85 /* GameControlLayer.cpp */,
+				D878DC551B1CFBE40066BF85 /* GameControlLayer.h */,
+				D878DC571B1CFD990066BF85 /* GamePlayerLayer.cpp */,
+				D878DC581B1CFD990066BF85 /* GamePlayerLayer.h */,
 			);
 			name = Game;
 			sourceTree = "<group>";
@@ -544,16 +549,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D8B569701B1344CB0006FC59 /* GameTouchLayer.cpp in Sources */,
 				46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */,
 				46880B8A19C43A87006E1F66 /* HelloWorldScene.cpp in Sources */,
 				D878DC4A1B1CF0F90066BF85 /* WelcomeScene.cpp in Sources */,
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
 				503AE10217EB989F00D1A890 /* RootViewController.mm in Sources */,
+				D878DC591B1CFD990066BF85 /* GamePlayerLayer.cpp in Sources */,
 				D878DC4D1B1CF1700066BF85 /* WelcomeBackgroundLayer.cpp in Sources */,
 				D8B5696C1B13404F0006FC59 /* GameScene.cpp in Sources */,
 				D878DC501B1CF1AD0066BF85 /* WelcomeButtonLayer.cpp in Sources */,
 				503AE10117EB989F00D1A890 /* main.m in Sources */,
+				D878DC561B1CFBE40066BF85 /* GameControlLayer.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
