@@ -1,5 +1,6 @@
 #include "AppDelegate.h"
 #include "HelloWorldScene.h"
+#include "WelcomeScene.h"
 
 USING_NS_CC;
 
@@ -34,7 +35,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     auto director = Director::getInstance();
     auto glview = director->getOpenGLView();
     if(!glview) {
-        glview = GLViewImpl::create("My Game");
+        glview = GLViewImpl::create("Voooooolleyball");
         director->setOpenGLView(glview);
     }
 
@@ -47,7 +48,8 @@ bool AppDelegate::applicationDidFinishLaunching() {
     register_all_packages();
 
     // create a scene. it's an autorelease object
-    auto scene = HelloWorld::createScene();
+//    auto scene = HelloWorld::createScene();
+    auto scene = WelcomeScene::create();
 
     // run
     director->runWithScene(scene);
