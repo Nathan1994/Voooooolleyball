@@ -13,9 +13,13 @@
 class GamePlayerLayer : public cocos2d::Layer{
 public:
     CREATE_FUNC(GamePlayerLayer);
+	virtual bool init();
     
 private:
-    
+    void configureTouchListener();
+    bool onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *unused_event);
+    virtual void onTouchMoved(cocos2d::Touch *touch, cocos2d::Event *unused_event);
+    virtual void onTouchEnded(cocos2d::Touch *touch, cocos2d::Event *unused_event);
     
 };
 

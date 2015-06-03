@@ -10,6 +10,7 @@
 #define __Voooooolleyball__GameScene__
 
 #include "cocos2d.h"
+#include "GamePlayerLayer.h"
 
 class GameScene : public cocos2d::Scene
 {
@@ -19,6 +20,7 @@ public:
     
 private:
     static cocos2d::Scene* gameScene;
+    static GamePlayerLayer* playerLayer;
     
 };
 
