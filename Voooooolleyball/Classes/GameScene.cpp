@@ -14,9 +14,12 @@ GamePlayerLayer* GameScene::playerLayer = nullptr;
 
 Scene* GameScene::create()
 {
-    gameScene = Scene::create();
+    gameScene = Scene::createWithPhysics();
+    gameScene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
+    
     
     playerLayer = GamePlayerLayer::create();
+    playerLayer->setPhyWorld(gameScene->getPhysicsWorld());
     gameScene->addChild(playerLayer);
     
     

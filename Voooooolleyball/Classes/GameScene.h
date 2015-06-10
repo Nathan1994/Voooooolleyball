@@ -17,10 +17,13 @@ class GameScene : public cocos2d::Scene
     
 public:
     static cocos2d::Scene* create();
+
     
 private:
     static cocos2d::Scene* gameScene;
     static GamePlayerLayer* playerLayer;
+
+
     
 };
 

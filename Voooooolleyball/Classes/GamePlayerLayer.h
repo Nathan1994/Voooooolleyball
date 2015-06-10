@@ -14,6 +14,7 @@ class GamePlayerLayer : public cocos2d::Layer{
 public:
     CREATE_FUNC(GamePlayerLayer);
 	virtual bool init();
+    void setPhyWorld(cocos2d::PhysicsWorld* world){m_world = world;}
     
 private:
     cocos2d::Sprite *player;
@@ -23,7 +24,14 @@ private:
     bool onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *unused_event);
     virtual void onTouchMoved(cocos2d::Touch *touch, cocos2d::Event *unused_event);
     virtual void onTouchEnded(cocos2d::Touch *touch, cocos2d::Event *unused_event);
-    
+    void playerMoveLeft();
+    void playerMoveRight();
+    void update(float dt) override;
+    cocos2d::PhysicsWorld* m_world;
+    void configurePhysicsContactListener();
+    bool onContactBegin(cocos2d::PhysicsContact& contact);
+    virtual void onEnter() override;
+    void configureEdge();
     
 };
 

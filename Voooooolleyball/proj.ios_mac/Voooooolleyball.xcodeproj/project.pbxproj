@@ -67,6 +67,7 @@
 		D44C620E132DFF430009C878 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620D132DFF430009C878 /* AVFoundation.framework */; };
 		D44C6210132DFF4E0009C878 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620F132DFF4E0009C878 /* AudioToolbox.framework */; };
 		D6B0611B1803AB670077942B /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B0611A1803AB670077942B /* CoreMotion.framework */; };
+		D8414EA21B2828ED00185A4E /* VisibleRect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D8414EA01B2828ED00185A4E /* VisibleRect.cpp */; };
 		D878DC4A1B1CF0F90066BF85 /* WelcomeScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D878DC481B1CF0F90066BF85 /* WelcomeScene.cpp */; };
 		D878DC4D1B1CF1700066BF85 /* WelcomeBackgroundLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D878DC4B1B1CF1700066BF85 /* WelcomeBackgroundLayer.cpp */; };
 		D878DC501B1CF1AD0066BF85 /* WelcomeButtonLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D878DC4E1B1CF1AD0066BF85 /* WelcomeButtonLayer.cpp */; };
@@ -167,6 +168,8 @@
 		D44C620D132DFF430009C878 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		D44C620F132DFF4E0009C878 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		D6B0611A1803AB670077942B /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/CoreMotion.framework; sourceTree = DEVELOPER_DIR; };
+		D8414EA01B2828ED00185A4E /* VisibleRect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VisibleRect.cpp; sourceTree = "<group>"; };
+		D8414EA11B2828ED00185A4E /* VisibleRect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VisibleRect.h; sourceTree = "<group>"; };
 		D878DC481B1CF0F90066BF85 /* WelcomeScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WelcomeScene.cpp; sourceTree = "<group>"; };
 		D878DC491B1CF0F90066BF85 /* WelcomeScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WelcomeScene.h; sourceTree = "<group>"; };
 		D878DC4B1B1CF1700066BF85 /* WelcomeBackgroundLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WelcomeBackgroundLayer.cpp; sourceTree = "<group>"; };
@@ -313,6 +316,7 @@
 		46880B8319C43A87006E1F66 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				D8414E9F1B2828E000185A4E /* Util */,
 				46880B8419C43A87006E1F66 /* AppDelegate.cpp */,
 				46880B8519C43A87006E1F66 /* AppDelegate.h */,
 				46880B8619C43A87006E1F66 /* HelloWorldScene.cpp */,
@@ -370,6 +374,15 @@
 			name = Icons;
 			path = ios;
 			sourceTree = SOURCE_ROOT;
+		};
+		D8414E9F1B2828E000185A4E /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				D8414EA01B2828ED00185A4E /* VisibleRect.cpp */,
+				D8414EA11B2828ED00185A4E /* VisibleRect.h */,
+			);
+			name = Util;
+			sourceTree = "<group>";
 		};
 		D878DC471B1CF0B80066BF85 /* Welcome */ = {
 			isa = PBXGroup;
@@ -569,6 +582,7 @@
 				D878DC591B1CFD990066BF85 /* GamePlayerLayer.cpp in Sources */,
 				D878DC4D1B1CF1700066BF85 /* WelcomeBackgroundLayer.cpp in Sources */,
 				D8B5696C1B13404F0006FC59 /* GameScene.cpp in Sources */,
+				D8414EA21B2828ED00185A4E /* VisibleRect.cpp in Sources */,
 				D878DC501B1CF1AD0066BF85 /* WelcomeButtonLayer.cpp in Sources */,
 				503AE10117EB989F00D1A890 /* main.m in Sources */,
 				D878DC561B1CFBE40066BF85 /* GameControlLayer.cpp in Sources */,
