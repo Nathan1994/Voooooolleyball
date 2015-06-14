@@ -32,6 +32,7 @@ private:
     bool onContactBegin(cocos2d::PhysicsContact& contact);
     virtual void onEnter() override;
     void configureEdge();
+    void configureObstacle();
     
 };
 

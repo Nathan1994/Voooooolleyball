@@ -36,6 +36,7 @@ void GamePlayerLayer::onEnter(){
     
     configurePlayer();
     configureEdge();
+    configureObstacle();
     
     this->scheduleUpdate();
 
@@ -45,10 +46,10 @@ void GamePlayerLayer::update(float dt){
     if (isMove) {
         Vec2 position = player->getPosition();
         if (isRight) {
-            player->setPosition(Vec2(position.x+1,position.y));
+            player->setPosition(Vec2(position.x+7,position.y));
         }
         else{
-            player->setPosition(Vec2(position.x-1,position.y));
+            player->setPosition(Vec2(position.x-7,position.y));
         }
     }
 }
@@ -67,6 +68,10 @@ void GamePlayerLayer::configureTouchListener(){
     listener->onTouchEnded = CC_CALLBACK_2(GamePlayerLayer::onTouchEnded, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener,this);
 }
+void GamePlayerLayer::configureObstacle(){
+    
+    
+}
 
 void GamePlayerLayer::configurePlayer(){
 
@@ -84,9 +89,11 @@ void GamePlayerLayer::configurePlayer(){
 }
 
 void GamePlayerLayer::configureEdge(){
+    float offsetScale = 0.87;
+    
     auto wall = Node::create();
-    wall->setPosition(VisibleRect::center());
-    auto body = PhysicsBody::createEdgeBox(VisibleRect::getVisibleRect().size, PHYSICSBODY_MATERIAL_DEFAULT, 3);
+    wall->setPosition(Point(VisibleRect::center().x,VisibleRect::center().y + VisibleRect::getVisibleRect().size.height * (1-offsetScale)/2));
+    auto body = PhysicsBody::createEdgeBox(Size(VisibleRect::getVisibleRect().size.width,VisibleRect::getVisibleRect().size.height * offsetScale), PHYSICSBODY_MATERIAL_DEFAULT, 3);
 //    body->setCategoryBitmask(0);
 //    body->setCollisionBitmask(1);
     body->setContactTestBitmask(1);
@@ -98,12 +105,12 @@ void GamePlayerLayer::configureEdge(){
 
 #pragma mark - Action Method
 void GamePlayerLayer::playerMoveLeft(){
-    auto moveBy = MoveBy::create(1, Vec2(1, 0));
+    auto moveBy = MoveBy::create(1, Vec2(60, 0));
     player->runAction(moveBy);
 }
 
 void GamePlayerLayer::playerMoveRight(){
-    auto moveBy = MoveBy::create(1,Vec2(10,0));
+    auto moveBy = MoveBy::create(1,Vec2(60,0));
     player->runAction(moveBy);
 }
 
@@ -112,6 +119,7 @@ bool GamePlayerLayer::onContactBegin(PhysicsContact& contact){
     CCLOG("Contact Begin...");
 //    PhysicsBody* a = contact.getShapeA()->getBody();
 //    PhysicsBody* b = contact.getShapeB()->getBody();
+    
     isJump = false;
     
     
@@ -127,7 +135,7 @@ void GamePlayerLayer::onTouchMoved(cocos2d::Touch *touch, cocos2d::Event *unused
     float deltaX,deltaY;
     deltaX = touch->getLocation().x - touch->getPreviousLocation().x;
     deltaY = touch->getLocation().y - touch->getPreviousLocation().y;
-    if (fabsf(deltaX) > 30) {
+    if (fabsf(deltaX) > 30 && !isJump) {
         isMove = true;
         if(deltaX > 0){
             isRight = true;
@@ -137,11 +145,10 @@ void GamePlayerLayer::onTouchMoved(cocos2d::Touch *touch, cocos2d::Event *unused
         }
     }
     
-    if (fabsf(deltaY) > 30) {
-        if (!isJump) {
-            player->getPhysicsBody()->setVelocity(Vec2(0,250.0f));
-            isJump = true;
-        }
+    if (deltaY > 30 && !isJump) {
+
+        player->getPhysicsBody()->setVelocity(Vec2(0,700.0f));
+        isJump = true;
     }
 
 }
