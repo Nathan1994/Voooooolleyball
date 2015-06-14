@@ -85,7 +85,14 @@ void GamePlayerLayer::configureObstacle(){
 }
 
 void GamePlayerLayer::configureBall(){
+    ball = Sprite::create("Game_Ball.png");;
+    float ballScale = (VisibleRect::getVisibleRect().size.height/6)/ball->getTextureRect().size.height;
+    ball->setScale(ballScale);
+    ball->setPosition(Point(VisibleRect::getVisibleRect().size.width/4,VisibleRect::getVisibleRect().size.height - VisibleRect::getVisibleRect().size.height/6 ));
+    auto body = PhysicsBody::createCircle(VisibleRect::getVisibleRect().size.height/12);
+    ball->setPhysicsBody(body);
     
+    this->addChild(ball);
 }
 
 void GamePlayerLayer::configurePlayer(){

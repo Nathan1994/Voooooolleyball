@@ -18,6 +18,7 @@ public:
     
 private:
     cocos2d::Sprite *player;
+    cocos2d::Sprite *ball;
     cocos2d::Vec2 beginTouchLocation;
     void configureTouchListener();
     void configurePlayer();
