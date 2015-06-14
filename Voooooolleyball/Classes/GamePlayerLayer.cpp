@@ -12,7 +12,7 @@
 
 USING_NS_CC;
 
-
+static const int DRAG_BODYS_TAG = 0x80;
 
 static bool isMove = false;
 static bool isRight = false;
@@ -23,13 +23,6 @@ static Node *edgeNode = nullptr;
 
 bool GamePlayerLayer::init(){
 
-
-    
-    
-
-    
-    this->scheduleUpdate();
-    
 
 
     return true;
@@ -42,9 +35,9 @@ void GamePlayerLayer::onEnter(){
     
     configurePlayer();
     configureEdge();
+    
+    this->scheduleUpdate();
 
-    
-    
 }
 
 void GamePlayerLayer::update(float dt){
@@ -75,16 +68,24 @@ void GamePlayerLayer::configureTouchListener(){
 }
 
 void GamePlayerLayer::configurePlayer(){
-    Size winSize = Director::getInstance()->getWinSize();
-    player = Sprite::create("Game_Player.png");
-    player->setPosition(winSize.width/2,0);
-    Size playerSize = player->getTextureRect().size;
-    player->setAnchorPoint(Point(0.5,0));
-    
-    auto body =PhysicsBody::createBox(playerSize);
-    player->setPhysicsBody(body);
 
+    player = Sprite::create("Game_Player.png");
+    player->setScale(1);
+    player->setTag(100);
+    player->setPhysicsBody(PhysicsBody::createBox(player->getTextureRect().size));
+    player->getPhysicsBody()->setTag(DRAG_BODYS_TAG);
+    player->setAnchorPoint(Point(0.5,0));
+    player->setPosition(VisibleRect::center());
     this->addChild(player);
+    
+    auto player1 = Sprite::create("Game_Player.png");
+    player1->setScale(1);
+    player1->setTag(100);
+    player1->setPhysicsBody(PhysicsBody::createBox(player1->getTextureRect().size));
+    player1->getPhysicsBody()->setTag(DRAG_BODYS_TAG);
+    player1->setAnchorPoint(Point(0.5,0));
+    player1->setPosition(VisibleRect::center());
+    this->addChild(player1);
 }
 
 void GamePlayerLayer::configureEdge(){
@@ -92,6 +93,7 @@ void GamePlayerLayer::configureEdge(){
     wall->setPosition(VisibleRect::center());
     wall->setPhysicsBody(PhysicsBody::createEdgeBox(VisibleRect::getVisibleRect().size, PHYSICSBODY_MATERIAL_DEFAULT, 3));
     this->addChild(wall);
+    
 }
 
 #pragma mark - Action Method
@@ -131,6 +133,12 @@ void GamePlayerLayer::onTouchMoved(cocos2d::Touch *touch, cocos2d::Event *unused
         else{
             isRight = false;
         }
+    }
+    
+    if (fabsf(deltaY) > 30) {
+        
+        auto jumpAction = JumpTo::create (1, Vec2(player->getPosition().x,100), 100, 1);
+        player->runAction(jumpAction);
     }
 
 }
