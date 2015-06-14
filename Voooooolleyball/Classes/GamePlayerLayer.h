@@ -33,6 +33,7 @@ private:
     virtual void onEnter() override;
     void configureEdge();
     void configureObstacle();
+    void configureBall();
     
 };
 

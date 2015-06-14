@@ -19,6 +19,9 @@ static bool isRight = false;
 static bool isJump = false;
 static Node *edgeNode = nullptr;
 
+static float offsetScale = 0.87;
+
+
 #pragma mark - Init Method
 
 
@@ -37,6 +40,7 @@ void GamePlayerLayer::onEnter(){
     configurePlayer();
     configureEdge();
     configureObstacle();
+    configureBall();
     
     this->scheduleUpdate();
 
@@ -61,6 +65,8 @@ void GamePlayerLayer::configurePhysicsContactListener(){
     _eventDispatcher->addEventListenerWithSceneGraphPriority(contactListener, this);
 }
 
+
+
 void GamePlayerLayer::configureTouchListener(){
     auto listener = EventListenerTouchOneByOne::create();
     listener->onTouchBegan = CC_CALLBACK_2(GamePlayerLayer::onTouchBegan, this);
@@ -69,7 +75,16 @@ void GamePlayerLayer::configureTouchListener(){
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener,this);
 }
 void GamePlayerLayer::configureObstacle(){
+    auto obstacle = Node::create();
+    obstacle->setAnchorPoint(Point(0.5,0));
+    obstacle->setPosition(Point(VisibleRect::bottom().x,VisibleRect::bottom().y+ VisibleRect::getVisibleRect().size.height * (1-offsetScale)));
+    obstacle->setPhysicsBody(PhysicsBody::createEdgeBox(Size(100,550)));
     
+    this->addChild(obstacle);
+    
+}
+
+void GamePlayerLayer::configureBall(){
     
 }
 
@@ -78,18 +93,20 @@ void GamePlayerLayer::configurePlayer(){
     player = Sprite::create("Game_Player.png");
     float playerScale = (VisibleRect::getVisibleRect().size.height/3)/player->getTextureRect().size.height;
     player->setScale(playerScale);
-    player->setTag(100);
+    player->setAnchorPoint(Point(0.5,0));
     auto body = PhysicsBody::createBox(Size(player->getTextureRect().size.width * playerScale, player->getTextureRect().size.height * playerScale));
+
     body->setContactTestBitmask(1);
     player->setPhysicsBody(body);
     player->getPhysicsBody()->setTag(DRAG_BODYS_TAG);
-    player->setAnchorPoint(Point(0.5,0));
-    player->setPosition(VisibleRect::center());
+
+    player->setPosition(Point(VisibleRect::getVisibleRect().size.width/4,VisibleRect::getVisibleRect().size.height*(1-offsetScale)+1));
+
     this->addChild(player);
 }
 
 void GamePlayerLayer::configureEdge(){
-    float offsetScale = 0.87;
+
     
     auto wall = Node::create();
     wall->setPosition(Point(VisibleRect::center().x,VisibleRect::center().y + VisibleRect::getVisibleRect().size.height * (1-offsetScale)/2));
