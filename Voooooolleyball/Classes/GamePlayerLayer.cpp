@@ -16,6 +16,7 @@ static const int DRAG_BODYS_TAG = 0x80;
 
 static bool isMove = false;
 static bool isRight = false;
+static bool isJump = false;
 static Node *edgeNode = nullptr;
 
 #pragma mark - Init Method
@@ -72,26 +73,24 @@ void GamePlayerLayer::configurePlayer(){
     player = Sprite::create("Game_Player.png");
     player->setScale(1);
     player->setTag(100);
-    player->setPhysicsBody(PhysicsBody::createBox(player->getTextureRect().size));
+    auto body = PhysicsBody::createBox(player->getTextureRect().size);
+    body->setContactTestBitmask(1);
+    player->setPhysicsBody(body);
     player->getPhysicsBody()->setTag(DRAG_BODYS_TAG);
     player->setAnchorPoint(Point(0.5,0));
     player->setPosition(VisibleRect::center());
     this->addChild(player);
-    
-    auto player1 = Sprite::create("Game_Player.png");
-    player1->setScale(1);
-    player1->setTag(100);
-    player1->setPhysicsBody(PhysicsBody::createBox(player1->getTextureRect().size));
-    player1->getPhysicsBody()->setTag(DRAG_BODYS_TAG);
-    player1->setAnchorPoint(Point(0.5,0));
-    player1->setPosition(VisibleRect::center());
-    this->addChild(player1);
 }
 
 void GamePlayerLayer::configureEdge(){
     auto wall = Node::create();
     wall->setPosition(VisibleRect::center());
-    wall->setPhysicsBody(PhysicsBody::createEdgeBox(VisibleRect::getVisibleRect().size, PHYSICSBODY_MATERIAL_DEFAULT, 3));
+    auto body = PhysicsBody::createEdgeBox(VisibleRect::getVisibleRect().size, PHYSICSBODY_MATERIAL_DEFAULT, 3);
+//    body->setCategoryBitmask(0);
+//    body->setCollisionBitmask(1);
+    body->setContactTestBitmask(1);
+    body->getShape(0)->setRestitution(0);
+    wall->setPhysicsBody(body);
     this->addChild(wall);
     
 }
@@ -110,8 +109,10 @@ void GamePlayerLayer::playerMoveRight(){
 #pragma mark - Listener Call Back
 bool GamePlayerLayer::onContactBegin(PhysicsContact& contact){
     CCLOG("Contact Begin...");
-    PhysicsBody* a = contact.getShapeA()->getBody();
-    PhysicsBody* b = contact.getShapeB()->getBody();
+//    PhysicsBody* a = contact.getShapeA()->getBody();
+//    PhysicsBody* b = contact.getShapeB()->getBody();
+    isJump = false;
+    
     
     return true;
 }
@@ -136,9 +137,10 @@ void GamePlayerLayer::onTouchMoved(cocos2d::Touch *touch, cocos2d::Event *unused
     }
     
     if (fabsf(deltaY) > 30) {
-        
-        auto jumpAction = JumpTo::create (1, Vec2(player->getPosition().x,100), 100, 1);
-        player->runAction(jumpAction);
+        if (!isJump) {
+            player->getPhysicsBody()->setVelocity(Vec2(0,250.0f));
+            isJump = true;
+        }
     }
 
 }

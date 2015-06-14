@@ -16,7 +16,7 @@ Scene* GameScene::create()
 {
     gameScene = Scene::createWithPhysics();
     gameScene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
-    
+    gameScene->getPhysicsWorld()->setGravity(Vec2(0,-19.8f));
     
     playerLayer = GamePlayerLayer::create();
     playerLayer->setPhyWorld(gameScene->getPhysicsWorld());
