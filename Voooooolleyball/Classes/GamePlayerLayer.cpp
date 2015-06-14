@@ -71,9 +71,10 @@ void GamePlayerLayer::configureTouchListener(){
 void GamePlayerLayer::configurePlayer(){
 
     player = Sprite::create("Game_Player.png");
-    player->setScale(1);
+    float playerScale = (VisibleRect::getVisibleRect().size.height/3)/player->getTextureRect().size.height;
+    player->setScale(playerScale);
     player->setTag(100);
-    auto body = PhysicsBody::createBox(player->getTextureRect().size);
+    auto body = PhysicsBody::createBox(Size(player->getTextureRect().size.width * playerScale, player->getTextureRect().size.height * playerScale));
     body->setContactTestBitmask(1);
     player->setPhysicsBody(body);
     player->getPhysicsBody()->setTag(DRAG_BODYS_TAG);

@@ -75,7 +75,10 @@
 		D878DC561B1CFBE40066BF85 /* GameControlLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D878DC541B1CFBE40066BF85 /* GameControlLayer.cpp */; };
 		D878DC591B1CFD990066BF85 /* GamePlayerLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D878DC571B1CFD990066BF85 /* GamePlayerLayer.cpp */; };
 		D8B5696C1B13404F0006FC59 /* GameScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D8B5696A1B13404F0006FC59 /* GameScene.cpp */; };
-		D8DFAF9A1B1ECDCC009BCC4A /* Game_Player.png in Resources */ = {isa = PBXBuildFile; fileRef = D8DFAF991B1ECDCC009BCC4A /* Game_Player.png */; };
+		D8FD53FC1B2DC23E00DF0325 /* GameBackgroundLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D8FD53FA1B2DC23E00DF0325 /* GameBackgroundLayer.cpp */; };
+		D8FD54021B2DC8C500DF0325 /* Game_Background.png in Resources */ = {isa = PBXBuildFile; fileRef = D8FD53FF1B2DC8C500DF0325 /* Game_Background.png */; };
+		D8FD54031B2DC8C500DF0325 /* Game_Ball.png in Resources */ = {isa = PBXBuildFile; fileRef = D8FD54001B2DC8C500DF0325 /* Game_Ball.png */; };
+		D8FD54041B2DC8C500DF0325 /* Game_Player.png in Resources */ = {isa = PBXBuildFile; fileRef = D8FD54011B2DC8C500DF0325 /* Game_Player.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -183,7 +186,11 @@
 		D878DC581B1CFD990066BF85 /* GamePlayerLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GamePlayerLayer.h; sourceTree = "<group>"; };
 		D8B5696A1B13404F0006FC59 /* GameScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameScene.cpp; sourceTree = "<group>"; };
 		D8B5696B1B13404F0006FC59 /* GameScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameScene.h; sourceTree = "<group>"; };
-		D8DFAF991B1ECDCC009BCC4A /* Game_Player.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Game_Player.png; sourceTree = "<group>"; };
+		D8FD53FA1B2DC23E00DF0325 /* GameBackgroundLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameBackgroundLayer.cpp; sourceTree = "<group>"; };
+		D8FD53FB1B2DC23E00DF0325 /* GameBackgroundLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameBackgroundLayer.h; sourceTree = "<group>"; };
+		D8FD53FF1B2DC8C500DF0325 /* Game_Background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Game_Background.png; sourceTree = "<group>"; };
+		D8FD54001B2DC8C500DF0325 /* Game_Ball.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Game_Ball.png; sourceTree = "<group>"; };
+		D8FD54011B2DC8C500DF0325 /* Game_Player.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Game_Player.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -414,6 +421,8 @@
 				D878DC551B1CFBE40066BF85 /* GameControlLayer.h */,
 				D878DC571B1CFD990066BF85 /* GamePlayerLayer.cpp */,
 				D878DC581B1CFD990066BF85 /* GamePlayerLayer.h */,
+				D8FD53FA1B2DC23E00DF0325 /* GameBackgroundLayer.cpp */,
+				D8FD53FB1B2DC23E00DF0325 /* GameBackgroundLayer.h */,
 			);
 			name = Game;
 			sourceTree = "<group>";
@@ -421,7 +430,9 @@
 		D8DFAF981B1ECDB3009BCC4A /* Game */ = {
 			isa = PBXGroup;
 			children = (
-				D8DFAF991B1ECDCC009BCC4A /* Game_Player.png */,
+				D8FD53FF1B2DC8C500DF0325 /* Game_Background.png */,
+				D8FD54001B2DC8C500DF0325 /* Game_Ball.png */,
+				D8FD54011B2DC8C500DF0325 /* Game_Player.png */,
 			);
 			name = Game;
 			sourceTree = "<group>";
@@ -526,6 +537,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D8FD54041B2DC8C500DF0325 /* Game_Player.png in Resources */,
 				5087E78117EB970100C73F5D /* Icon-120.png in Resources */,
 				5087E78617EB970100C73F5D /* Icon-76.png in Resources */,
 				5087E77F17EB970100C73F5D /* Default@2x.png in Resources */,
@@ -541,12 +553,13 @@
 				5087E78017EB970100C73F5D /* Icon-114.png in Resources */,
 				50EF62A217ECD613001EB2F8 /* Icon-29.png in Resources */,
 				50EF629617ECD46A001EB2F8 /* Icon-40.png in Resources */,
+				D8FD54021B2DC8C500DF0325 /* Game_Background.png in Resources */,
+				D8FD54031B2DC8C500DF0325 /* Game_Ball.png in Resources */,
 				5087E78217EB970100C73F5D /* Icon-144.png in Resources */,
 				3EACC98F19EE6D4300EB3C5E /* res in Resources */,
 				50EF629817ECD46A001EB2F8 /* Icon-80.png in Resources */,
 				5087E78417EB970100C73F5D /* Icon-57.png in Resources */,
 				5087E77E17EB970100C73F5D /* Default.png in Resources */,
-				D8DFAF9A1B1ECDCC009BCC4A /* Game_Player.png in Resources */,
 				521A8E6419F0C34300D177D7 /* Default-667h@2x.png in Resources */,
 				D878DC531B1CF6180066BF85 /* Welcome_Start_Game_Button.png in Resources */,
 				46880B7B19C43A67006E1F66 /* CloseNormal.png in Resources */,
@@ -577,6 +590,7 @@
 				46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */,
 				46880B8A19C43A87006E1F66 /* HelloWorldScene.cpp in Sources */,
 				D878DC4A1B1CF0F90066BF85 /* WelcomeScene.cpp in Sources */,
+				D8FD53FC1B2DC23E00DF0325 /* GameBackgroundLayer.cpp in Sources */,
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
 				503AE10217EB989F00D1A890 /* RootViewController.mm in Sources */,
 				D878DC591B1CFD990066BF85 /* GamePlayerLayer.cpp in Sources */,
