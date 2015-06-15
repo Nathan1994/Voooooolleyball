@@ -12,7 +12,9 @@
 
 USING_NS_CC;
 
-static const int DRAG_BODYS_TAG = 0x80;
+static const int BALL_TAG = 0x00;
+static const int PLAYER_TAG = 0x01;
+static const int WALL_TAG = 0x11;
 
 static bool isMove = false;
 static bool isRight = false;
@@ -90,6 +92,8 @@ void GamePlayerLayer::configureBall(){
     ball->setScale(ballScale);
     ball->setPosition(Point(VisibleRect::getVisibleRect().size.width/4,VisibleRect::getVisibleRect().size.height - VisibleRect::getVisibleRect().size.height/6 ));
     auto body = PhysicsBody::createCircle(VisibleRect::getVisibleRect().size.height/12);
+    body->setContactTestBitmask(1);
+    body->setTag(BALL_TAG);
     ball->setPhysicsBody(body);
     
     this->addChild(ball);
@@ -105,7 +109,7 @@ void GamePlayerLayer::configurePlayer(){
 
     body->setContactTestBitmask(1);
     player->setPhysicsBody(body);
-    player->getPhysicsBody()->setTag(DRAG_BODYS_TAG);
+    player->getPhysicsBody()->setTag(PLAYER_TAG);
 
     player->setPosition(Point(VisibleRect::getVisibleRect().size.width/4,VisibleRect::getVisibleRect().size.height*(1-offsetScale)+1));
 
@@ -122,6 +126,7 @@ void GamePlayerLayer::configureEdge(){
 //    body->setCollisionBitmask(1);
     body->setContactTestBitmask(1);
     body->getShape(0)->setRestitution(0);
+    body->setTag(WALL_TAG);
     wall->setPhysicsBody(body);
     this->addChild(wall);
     
@@ -141,10 +146,26 @@ void GamePlayerLayer::playerMoveRight(){
 #pragma mark - Listener Call Back
 bool GamePlayerLayer::onContactBegin(PhysicsContact& contact){
     CCLOG("Contact Begin...");
-//    PhysicsBody* a = contact.getShapeA()->getBody();
-//    PhysicsBody* b = contact.getShapeB()->getBody();
+    PhysicsBody* a = contact.getShapeA()->getBody();
+    PhysicsBody* b = contact.getShapeB()->getBody();
     
-    isJump = false;
+    CCLOG("BodyA T:%d , BodyB T:%d",a->getTag(),b->getTag());
+    CCLOG("BodyA V:(%f,%f) , BodyB V:(%f,%f)",a->getVelocity().x,a->getVelocity().y,b->getVelocity().x,b->getVelocity().y);
+    
+    if (a->getTag() == WALL_TAG || b->getTag() == WALL_TAG) {
+        if (a->getTag() == PLAYER_TAG || b->getTag() == PLAYER_TAG) {
+            isJump = false;
+        }
+    }
+    if (a->getTag() == BALL_TAG || b->getTag() == BALL_TAG) {
+        if (a->getTag() == PLAYER_TAG || b->getTag() == PLAYER_TAG) {
+            int boost = 700;
+            Vec2 ballVelocity = ball->getPhysicsBody()->getVelocity();
+            float sqrt = sqrtf(ballVelocity.x * ballVelocity.x + ballVelocity.y * ballVelocity.y);
+            ball->getPhysicsBody()->setVelocity(Vec2(-ballVelocity.x/sqrt * boost,-ballVelocity.y/sqrt * boost));
+        }
+    }
+    
     
     
     return true;
