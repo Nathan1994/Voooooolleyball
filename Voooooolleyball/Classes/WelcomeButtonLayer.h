@@ -14,6 +14,7 @@
 class WelcomeButtonLayer : public cocos2d::Layer {
 private:
     void startGameButtonCallBack(Ref* pSender);
+    void helpButtonCallBack(Ref* pSender);
     virtual bool init() override;
     
 public:

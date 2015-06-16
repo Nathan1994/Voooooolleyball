@@ -13,7 +13,7 @@
 
 class WelcomeBackgroundLayer : public cocos2d::Layer {
 private:
-    
+    virtual void onEnter() override;
 public:
     CREATE_FUNC(WelcomeBackgroundLayer);
 };

@@ -47,7 +47,8 @@ GamePlayerSprite* GamePlayerSprite::create(){
 
 void GamePlayerSprite::jump(){
     if (!isJump) {
-        this->getPhysicsBody()->setVelocity(Vec2(0,700.0f));
+        Vec2 speed = this->getPhysicsBody()->getVelocity();
+        this->getPhysicsBody()->setVelocity(Vec2(speed.x,700.0f));
         isJump = true;
     }
 }

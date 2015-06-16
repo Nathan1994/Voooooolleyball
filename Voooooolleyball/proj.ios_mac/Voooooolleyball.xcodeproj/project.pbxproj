@@ -79,6 +79,9 @@
 		D89D787F1B3010D100A1D44A /* Game_Background_Tint.png in Resources */ = {isa = PBXBuildFile; fileRef = D89D787E1B3010D100A1D44A /* Game_Background_Tint.png */; };
 		D8B5696C1B13404F0006FC59 /* GameScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D8B5696A1B13404F0006FC59 /* GameScene.cpp */; };
 		D8C069CD1B3013F300B45A50 /* Game_Background.png in Resources */ = {isa = PBXBuildFile; fileRef = D8C069CC1B3013F300B45A50 /* Game_Background.png */; };
+		D8C069D31B304FBF00B45A50 /* Welcome_Background.png in Resources */ = {isa = PBXBuildFile; fileRef = D8C069D01B304FBF00B45A50 /* Welcome_Background.png */; };
+		D8C069DB1B30681600B45A50 /* Welcome_Start_Button.png in Resources */ = {isa = PBXBuildFile; fileRef = D8C069D91B30681600B45A50 /* Welcome_Start_Button.png */; };
+		D8C069DD1B306A5600B45A50 /* Welcome_Help_Button.png in Resources */ = {isa = PBXBuildFile; fileRef = D8C069DC1B306A5600B45A50 /* Welcome_Help_Button.png */; };
 		D8FD53FC1B2DC23E00DF0325 /* GameBackgroundLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D8FD53FA1B2DC23E00DF0325 /* GameBackgroundLayer.cpp */; };
 		D8FD540B1B2DDD3200DF0325 /* Game_Player.png in Resources */ = {isa = PBXBuildFile; fileRef = D8FD54071B2DDD3200DF0325 /* Game_Player.png */; };
 		D8FD540C1B2DDD3200DF0325 /* Game_Ball.png in Resources */ = {isa = PBXBuildFile; fileRef = D8FD54081B2DDD3200DF0325 /* Game_Ball.png */; };
@@ -195,6 +198,9 @@
 		D8B5696A1B13404F0006FC59 /* GameScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameScene.cpp; sourceTree = "<group>"; };
 		D8B5696B1B13404F0006FC59 /* GameScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameScene.h; sourceTree = "<group>"; };
 		D8C069CC1B3013F300B45A50 /* Game_Background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Game_Background.png; sourceTree = "<group>"; };
+		D8C069D01B304FBF00B45A50 /* Welcome_Background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Welcome_Background.png; sourceTree = "<group>"; };
+		D8C069D91B30681600B45A50 /* Welcome_Start_Button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Welcome_Start_Button.png; sourceTree = "<group>"; };
+		D8C069DC1B306A5600B45A50 /* Welcome_Help_Button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Welcome_Help_Button.png; sourceTree = "<group>"; };
 		D8FD53FA1B2DC23E00DF0325 /* GameBackgroundLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameBackgroundLayer.cpp; sourceTree = "<group>"; };
 		D8FD53FB1B2DC23E00DF0325 /* GameBackgroundLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameBackgroundLayer.h; sourceTree = "<group>"; };
 		D8FD54071B2DDD3200DF0325 /* Game_Player.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Game_Player.png; sourceTree = "<group>"; };
@@ -416,6 +422,9 @@
 		D878DC511B1CF5D80066BF85 /* Welcome */ = {
 			isa = PBXGroup;
 			children = (
+				D8C069D01B304FBF00B45A50 /* Welcome_Background.png */,
+				D8C069DC1B306A5600B45A50 /* Welcome_Help_Button.png */,
+				D8C069D91B30681600B45A50 /* Welcome_Start_Button.png */,
 				D878DC521B1CF6180066BF85 /* Welcome_Start_Game_Button.png */,
 			);
 			name = Welcome;
@@ -553,6 +562,7 @@
 			files = (
 				5087E78117EB970100C73F5D /* Icon-120.png in Resources */,
 				5087E78617EB970100C73F5D /* Icon-76.png in Resources */,
+				D8C069D31B304FBF00B45A50 /* Welcome_Background.png in Resources */,
 				5087E77F17EB970100C73F5D /* Default@2x.png in Resources */,
 				50EF629917ECD46A001EB2F8 /* Icon-100.png in Resources */,
 				D89D78751B300A8E00A1D44A /* Game_Army.png in Resources */,
@@ -560,6 +570,8 @@
 				5087E78317EB970100C73F5D /* Icon-152.png in Resources */,
 				46880B8119C43A67006E1F66 /* HelloWorld.png in Resources */,
 				D8FD540B1B2DDD3200DF0325 /* Game_Player.png in Resources */,
+				D8C069DD1B306A5600B45A50 /* Welcome_Help_Button.png in Resources */,
+				D8C069DB1B30681600B45A50 /* Welcome_Start_Button.png in Resources */,
 				46880B7D19C43A67006E1F66 /* CloseSelected.png in Resources */,
 				5087E77D17EB970100C73F5D /* Default-568h@2x.png in Resources */,
 				5087E78517EB970100C73F5D /* Icon-72.png in Resources */,
