@@ -7,6 +7,7 @@
 //
 
 #include "HelpScene.h"
+#include "VisibleRect.h"
 
 
 USING_NS_CC;
