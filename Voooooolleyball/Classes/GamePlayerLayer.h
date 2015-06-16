@@ -10,6 +10,7 @@
 #define __Voooooolleyball__GamePlayerLayer__
 
 #include "cocos2d.h"
+#include "GamePlayerSprite.h"
 class GamePlayerLayer : public cocos2d::Layer{
 public:
     CREATE_FUNC(GamePlayerLayer);
@@ -17,7 +18,7 @@ public:
     void setPhyWorld(cocos2d::PhysicsWorld* world){m_world = world;}
     
 private:
-    cocos2d::Sprite *player;
+    GamePlayerSprite *player;
     cocos2d::Sprite *ball;
     cocos2d::Vec2 beginTouchLocation;
     void configureTouchListener();
@@ -31,10 +32,12 @@ private:
     cocos2d::PhysicsWorld* m_world;
     void configurePhysicsContactListener();
     bool onContactBegin(cocos2d::PhysicsContact& contact);
+    void onContactSeperate(cocos2d::PhysicsContact& contact);
     virtual void onEnter() override;
     void configureEdge();
     void configureObstacle();
     void configureBall();
+    void hitBall();
     
 };
 

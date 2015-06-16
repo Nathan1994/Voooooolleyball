@@ -10,15 +10,18 @@
 #include "ui/CocosGUI.h"
 #include "VisibleRect.h"
 
+
 USING_NS_CC;
 
 static const int BALL_TAG = 0x00;
 static const int PLAYER_TAG = 0x01;
 static const int WALL_TAG = 0x11;
 
-static bool isMove = false;
+
 static bool isRight = false;
-static bool isJump = false;
+static bool isMove = false;
+static bool isContactBall = false;
+
 static Node *edgeNode = nullptr;
 
 static float offsetScale = 0.87;
@@ -64,6 +67,8 @@ void GamePlayerLayer::update(float dt){
 void GamePlayerLayer::configurePhysicsContactListener(){
     auto contactListener = EventListenerPhysicsContact::create();
     contactListener->onContactBegin = CC_CALLBACK_1(GamePlayerLayer::onContactBegin, this);
+    contactListener->onContactSeperate = CC_CALLBACK_1(GamePlayerLayer::onContactSeperate, this);
+
     _eventDispatcher->addEventListenerWithSceneGraphPriority(contactListener, this);
 }
 
@@ -101,18 +106,7 @@ void GamePlayerLayer::configureBall(){
 
 void GamePlayerLayer::configurePlayer(){
 
-    player = Sprite::create("Game_Player.png");
-    float playerScale = (VisibleRect::getVisibleRect().size.height/3)/player->getTextureRect().size.height;
-    player->setScale(playerScale);
-    player->setAnchorPoint(Point(0.5,0));
-    auto body = PhysicsBody::createBox(Size(player->getTextureRect().size.width * playerScale, player->getTextureRect().size.height * playerScale));
-
-    body->setContactTestBitmask(1);
-    player->setPhysicsBody(body);
-    player->getPhysicsBody()->setTag(PLAYER_TAG);
-
-    player->setPosition(Point(VisibleRect::getVisibleRect().size.width/4,VisibleRect::getVisibleRect().size.height*(1-offsetScale)+1));
-
+    player = GamePlayerSprite::create();
     this->addChild(player);
 }
 
@@ -122,8 +116,6 @@ void GamePlayerLayer::configureEdge(){
     auto wall = Node::create();
     wall->setPosition(Point(VisibleRect::center().x,VisibleRect::center().y + VisibleRect::getVisibleRect().size.height * (1-offsetScale)/2));
     auto body = PhysicsBody::createEdgeBox(Size(VisibleRect::getVisibleRect().size.width,VisibleRect::getVisibleRect().size.height * offsetScale), PHYSICSBODY_MATERIAL_DEFAULT, 3);
-//    body->setCategoryBitmask(0);
-//    body->setCollisionBitmask(1);
     body->setContactTestBitmask(1);
     body->getShape(0)->setRestitution(0);
     body->setTag(WALL_TAG);
@@ -133,14 +125,15 @@ void GamePlayerLayer::configureEdge(){
 }
 
 #pragma mark - Action Method
-void GamePlayerLayer::playerMoveLeft(){
-    auto moveBy = MoveBy::create(1, Vec2(60, 0));
-    player->runAction(moveBy);
-}
 
-void GamePlayerLayer::playerMoveRight(){
-    auto moveBy = MoveBy::create(1,Vec2(60,0));
-    player->runAction(moveBy);
+void GamePlayerLayer::hitBall(){
+    
+    if ((VisibleRect::getVisibleRect().size.width/2 - player->getPosition().x > 0)) {
+        ball->getPhysicsBody()->setVelocity(Vec2(1000,-1000));
+    }
+    else{
+        ball->getPhysicsBody()->setVelocity(Vec2(-1000,-1000));
+    }
 }
 
 #pragma mark - Listener Call Back
@@ -149,16 +142,22 @@ bool GamePlayerLayer::onContactBegin(PhysicsContact& contact){
     PhysicsBody* a = contact.getShapeA()->getBody();
     PhysicsBody* b = contact.getShapeB()->getBody();
     
-    CCLOG("BodyA T:%d , BodyB T:%d",a->getTag(),b->getTag());
-    CCLOG("BodyA V:(%f,%f) , BodyB V:(%f,%f)",a->getVelocity().x,a->getVelocity().y,b->getVelocity().x,b->getVelocity().y);
     
     if (a->getTag() == WALL_TAG || b->getTag() == WALL_TAG) {
         if (a->getTag() == PLAYER_TAG || b->getTag() == PLAYER_TAG) {
-            isJump = false;
+            player->isJump = false;
+            float playerRotation = player->getRotation();
+            if (fabsf(playerRotation) > 5 && !player->isFall) {
+                player->standup();
+            }
         }
     }
+    
     if (a->getTag() == BALL_TAG || b->getTag() == BALL_TAG) {
         if (a->getTag() == PLAYER_TAG || b->getTag() == PLAYER_TAG) {
+            
+            isContactBall = true;
+            
             int boost = 700;
             Vec2 ballVelocity = ball->getPhysicsBody()->getVelocity();
             float sqrt = sqrtf(ballVelocity.x * ballVelocity.x + ballVelocity.y * ballVelocity.y);
@@ -168,10 +167,27 @@ bool GamePlayerLayer::onContactBegin(PhysicsContact& contact){
     
     
     
+    
+    
     return true;
+}
+
+void GamePlayerLayer::onContactSeperate(PhysicsContact& contact){
+    CCLOG("Contact Seperate...");
+    PhysicsBody* a = contact.getShapeA()->getBody();
+    PhysicsBody* b = contact.getShapeB()->getBody();
+    
+    if (a->getTag() == BALL_TAG || b->getTag() == BALL_TAG) {
+        if (a->getTag() == PLAYER_TAG || b->getTag() == PLAYER_TAG) {
+            isContactBall = false;
+            
+        }
+    }
 }
 bool GamePlayerLayer::onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *unused_event) {
     CCLOG("Touch Begin...");
+    
+    
     return true;
 }
 
@@ -180,7 +196,7 @@ void GamePlayerLayer::onTouchMoved(cocos2d::Touch *touch, cocos2d::Event *unused
     float deltaX,deltaY;
     deltaX = touch->getLocation().x - touch->getPreviousLocation().x;
     deltaY = touch->getLocation().y - touch->getPreviousLocation().y;
-    if (fabsf(deltaX) > 30 && !isJump) {
+    if (!player->isJump) {
         isMove = true;
         if(deltaX > 0){
             isRight = true;
@@ -190,18 +206,29 @@ void GamePlayerLayer::onTouchMoved(cocos2d::Touch *touch, cocos2d::Event *unused
         }
     }
     
-    if (deltaY > 30 && !isJump) {
-
-        player->getPhysicsBody()->setVelocity(Vec2(0,700.0f));
-        isJump = true;
+    if (deltaY > 30) {
+        player->jump();
+    }
+    
+    if (deltaY < -30) {
+        if (player->isJump) {
+            if (isContactBall) {
+                hitBall();
+            }
+        }
+        else{
+            player->fall();
+        }
     }
 
 }
 void GamePlayerLayer::onTouchEnded(cocos2d::Touch *touch, cocos2d::Event *unused_event) {
     CCLOG("Touch End...");
+    
     isMove = false;
     
 }
+
 
 
 
