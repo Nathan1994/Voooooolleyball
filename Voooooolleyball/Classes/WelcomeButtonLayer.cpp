@@ -34,7 +34,7 @@ bool WelcomeButtonLayer::init() {
 
 void WelcomeButtonLayer::startGameButtonCallBack(Ref* pSender) {
     CCLOG("Start Button Did Select...");
-    Scene* gameScene = TransitionFade::create(2.0f, GameScene::create());
+    Scene* gameScene = TransitionFade::create(1.0f, GameScene::create());
     Director::getInstance()->replaceScene(gameScene);
 }
 

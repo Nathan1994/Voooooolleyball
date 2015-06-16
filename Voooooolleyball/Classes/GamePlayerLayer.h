@@ -11,6 +11,8 @@
 
 #include "cocos2d.h"
 #include "GamePlayerSprite.h"
+
+
 class GamePlayerLayer : public cocos2d::Layer{
 public:
     CREATE_FUNC(GamePlayerLayer);
@@ -19,6 +21,7 @@ public:
     
 private:
     GamePlayerSprite *player;
+    GamePlayerSprite *enemy;
     cocos2d::Sprite *ball;
     cocos2d::Vec2 beginTouchLocation;
     void configureTouchListener();
@@ -37,8 +40,12 @@ private:
     void configureEdge();
     void configureObstacle();
     void configureBall();
+    void configureEnemy();
+    void configureButton();
     void hitBall();
-    
+    void restart();
+    void restartButtenTouchEvent(cocos2d::Ref* pSender);
+    void homeButtenTouchEvent(Ref* pSender);
 };
 
 #endif /* defined(__Voooooolleyball__GamePlayerLayer__) */

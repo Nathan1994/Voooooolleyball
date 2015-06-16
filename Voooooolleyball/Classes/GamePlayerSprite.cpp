@@ -17,27 +17,21 @@ static const int PLAYER_TAG = 0x01;
 
 
 
-GamePlayerSprite* GamePlayerSprite::create(){
+GamePlayerSprite* GamePlayerSprite::create(const std::string& filename){
     
     
-    auto player = (GamePlayerSprite *)Sprite::create("Game_Player.png");
+    auto player = (GamePlayerSprite *)Sprite::create(filename);
     float playerScale = (VisibleRect::getVisibleRect().size.height/3)/player->getTextureRect().size.height;
     player->setScale(playerScale);
     player->setAnchorPoint(Point(0.5,0));
     
     auto body = PhysicsBody::createBox(Size(player->getTextureRect().size.width * playerScale, player->getTextureRect().size.height * playerScale));
     
-    //    auto body = PhysicsBody::create();
-    //    auto circleShape = PhysicsShapeCircle::create(10);
-    //    body->addShape(circleShape);
-    //    auto boxShape = PhysicsShapeBox::create(Size(10,10));
-    //    body->addShape(boxShape);
-    
     body->setContactTestBitmask(1);
     player->setPhysicsBody(body);
     player->getPhysicsBody()->setTag(PLAYER_TAG);
     
-    player->setPosition(Point(VisibleRect::getVisibleRect().size.width/4,VisibleRect::getVisibleRect().size.height*(1-offsetScale)+1));
+
     
     player->isJump = false;
     

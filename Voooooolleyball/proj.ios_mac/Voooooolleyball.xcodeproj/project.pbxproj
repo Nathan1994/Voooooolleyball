@@ -75,13 +75,19 @@
 		D878DC561B1CFBE40066BF85 /* GameControlLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D878DC541B1CFBE40066BF85 /* GameControlLayer.cpp */; };
 		D878DC591B1CFD990066BF85 /* GamePlayerLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D878DC571B1CFD990066BF85 /* GamePlayerLayer.cpp */; };
 		D89D78731B2FB4A000A1D44A /* GamePlayerSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D89D78711B2FB4A000A1D44A /* GamePlayerSprite.cpp */; };
-		D89D78751B300A8E00A1D44A /* Game_Army.png in Resources */ = {isa = PBXBuildFile; fileRef = D89D78741B300A8E00A1D44A /* Game_Army.png */; };
+		D89D78751B300A8E00A1D44A /* Game_Enemy.png in Resources */ = {isa = PBXBuildFile; fileRef = D89D78741B300A8E00A1D44A /* Game_Enemy.png */; };
 		D89D787F1B3010D100A1D44A /* Game_Background_Tint.png in Resources */ = {isa = PBXBuildFile; fileRef = D89D787E1B3010D100A1D44A /* Game_Background_Tint.png */; };
 		D8B5696C1B13404F0006FC59 /* GameScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D8B5696A1B13404F0006FC59 /* GameScene.cpp */; };
 		D8C069CD1B3013F300B45A50 /* Game_Background.png in Resources */ = {isa = PBXBuildFile; fileRef = D8C069CC1B3013F300B45A50 /* Game_Background.png */; };
 		D8C069D31B304FBF00B45A50 /* Welcome_Background.png in Resources */ = {isa = PBXBuildFile; fileRef = D8C069D01B304FBF00B45A50 /* Welcome_Background.png */; };
 		D8C069DB1B30681600B45A50 /* Welcome_Start_Button.png in Resources */ = {isa = PBXBuildFile; fileRef = D8C069D91B30681600B45A50 /* Welcome_Start_Button.png */; };
 		D8C069DD1B306A5600B45A50 /* Welcome_Help_Button.png in Resources */ = {isa = PBXBuildFile; fileRef = D8C069DC1B306A5600B45A50 /* Welcome_Help_Button.png */; };
+		D8C069E01B3086A100B45A50 /* Game_Home_Button.png in Resources */ = {isa = PBXBuildFile; fileRef = D8C069DE1B3086A100B45A50 /* Game_Home_Button.png */; };
+		D8C069E11B3086A100B45A50 /* Game_Restart_Button.png in Resources */ = {isa = PBXBuildFile; fileRef = D8C069DF1B3086A100B45A50 /* Game_Restart_Button.png */; };
+		D8C069E51B309D4400B45A50 /* HelpScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D8C069E31B309D4400B45A50 /* HelpScene.cpp */; };
+		D8C069EA1B309F6200B45A50 /* Help_Left_Button.png in Resources */ = {isa = PBXBuildFile; fileRef = D8C069E71B309F6200B45A50 /* Help_Left_Button.png */; };
+		D8C069EB1B309F6200B45A50 /* Help_Home_Button.png in Resources */ = {isa = PBXBuildFile; fileRef = D8C069E81B309F6200B45A50 /* Help_Home_Button.png */; };
+		D8C069EC1B309F6200B45A50 /* Help_Right_Button.png in Resources */ = {isa = PBXBuildFile; fileRef = D8C069E91B309F6200B45A50 /* Help_Right_Button.png */; };
 		D8FD53FC1B2DC23E00DF0325 /* GameBackgroundLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D8FD53FA1B2DC23E00DF0325 /* GameBackgroundLayer.cpp */; };
 		D8FD540B1B2DDD3200DF0325 /* Game_Player.png in Resources */ = {isa = PBXBuildFile; fileRef = D8FD54071B2DDD3200DF0325 /* Game_Player.png */; };
 		D8FD540C1B2DDD3200DF0325 /* Game_Ball.png in Resources */ = {isa = PBXBuildFile; fileRef = D8FD54081B2DDD3200DF0325 /* Game_Ball.png */; };
@@ -193,7 +199,7 @@
 		D878DC581B1CFD990066BF85 /* GamePlayerLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GamePlayerLayer.h; sourceTree = "<group>"; };
 		D89D78711B2FB4A000A1D44A /* GamePlayerSprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GamePlayerSprite.cpp; sourceTree = "<group>"; };
 		D89D78721B2FB4A000A1D44A /* GamePlayerSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GamePlayerSprite.h; sourceTree = "<group>"; };
-		D89D78741B300A8E00A1D44A /* Game_Army.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Game_Army.png; sourceTree = "<group>"; };
+		D89D78741B300A8E00A1D44A /* Game_Enemy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Game_Enemy.png; sourceTree = "<group>"; };
 		D89D787E1B3010D100A1D44A /* Game_Background_Tint.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Game_Background_Tint.png; sourceTree = "<group>"; };
 		D8B5696A1B13404F0006FC59 /* GameScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameScene.cpp; sourceTree = "<group>"; };
 		D8B5696B1B13404F0006FC59 /* GameScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameScene.h; sourceTree = "<group>"; };
@@ -201,6 +207,13 @@
 		D8C069D01B304FBF00B45A50 /* Welcome_Background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Welcome_Background.png; sourceTree = "<group>"; };
 		D8C069D91B30681600B45A50 /* Welcome_Start_Button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Welcome_Start_Button.png; sourceTree = "<group>"; };
 		D8C069DC1B306A5600B45A50 /* Welcome_Help_Button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Welcome_Help_Button.png; sourceTree = "<group>"; };
+		D8C069DE1B3086A100B45A50 /* Game_Home_Button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Game_Home_Button.png; sourceTree = "<group>"; };
+		D8C069DF1B3086A100B45A50 /* Game_Restart_Button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Game_Restart_Button.png; sourceTree = "<group>"; };
+		D8C069E31B309D4400B45A50 /* HelpScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HelpScene.cpp; sourceTree = "<group>"; };
+		D8C069E41B309D4400B45A50 /* HelpScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelpScene.h; sourceTree = "<group>"; };
+		D8C069E71B309F6200B45A50 /* Help_Left_Button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Help_Left_Button.png; sourceTree = "<group>"; };
+		D8C069E81B309F6200B45A50 /* Help_Home_Button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Help_Home_Button.png; sourceTree = "<group>"; };
+		D8C069E91B309F6200B45A50 /* Help_Right_Button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Help_Right_Button.png; sourceTree = "<group>"; };
 		D8FD53FA1B2DC23E00DF0325 /* GameBackgroundLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameBackgroundLayer.cpp; sourceTree = "<group>"; };
 		D8FD53FB1B2DC23E00DF0325 /* GameBackgroundLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameBackgroundLayer.h; sourceTree = "<group>"; };
 		D8FD54071B2DDD3200DF0325 /* Game_Player.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Game_Player.png; sourceTree = "<group>"; };
@@ -323,6 +336,7 @@
 		46880B7519C43A67006E1F66 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				D8C069E61B309F5300B45A50 /* Help */,
 				D8DFAF981B1ECDB3009BCC4A /* Game */,
 				D878DC511B1CF5D80066BF85 /* Welcome */,
 				521A8EA819F11F5000D177D7 /* fonts */,
@@ -343,6 +357,7 @@
 				46880B8519C43A87006E1F66 /* AppDelegate.h */,
 				46880B8619C43A87006E1F66 /* HelloWorldScene.cpp */,
 				46880B8719C43A87006E1F66 /* HelloWorldScene.h */,
+				D8C069E21B309D2900B45A50 /* Help */,
 				D878DC471B1CF0B80066BF85 /* Welcome */,
 				D8B5696D1B1344B60006FC59 /* Game */,
 			);
@@ -447,12 +462,33 @@
 			name = Game;
 			sourceTree = "<group>";
 		};
+		D8C069E21B309D2900B45A50 /* Help */ = {
+			isa = PBXGroup;
+			children = (
+				D8C069E31B309D4400B45A50 /* HelpScene.cpp */,
+				D8C069E41B309D4400B45A50 /* HelpScene.h */,
+			);
+			name = Help;
+			sourceTree = "<group>";
+		};
+		D8C069E61B309F5300B45A50 /* Help */ = {
+			isa = PBXGroup;
+			children = (
+				D8C069E71B309F6200B45A50 /* Help_Left_Button.png */,
+				D8C069E81B309F6200B45A50 /* Help_Home_Button.png */,
+				D8C069E91B309F6200B45A50 /* Help_Right_Button.png */,
+			);
+			name = Help;
+			sourceTree = "<group>";
+		};
 		D8DFAF981B1ECDB3009BCC4A /* Game */ = {
 			isa = PBXGroup;
 			children = (
+				D8C069DE1B3086A100B45A50 /* Game_Home_Button.png */,
+				D8C069DF1B3086A100B45A50 /* Game_Restart_Button.png */,
 				D8FD54071B2DDD3200DF0325 /* Game_Player.png */,
 				D89D787E1B3010D100A1D44A /* Game_Background_Tint.png */,
-				D89D78741B300A8E00A1D44A /* Game_Army.png */,
+				D89D78741B300A8E00A1D44A /* Game_Enemy.png */,
 				D8FD54081B2DDD3200DF0325 /* Game_Ball.png */,
 				D8FD54091B2DDD3200DF0325 /* Game_Obstacle.png */,
 				D8C069CC1B3013F300B45A50 /* Game_Background.png */,
@@ -565,7 +601,7 @@
 				D8C069D31B304FBF00B45A50 /* Welcome_Background.png in Resources */,
 				5087E77F17EB970100C73F5D /* Default@2x.png in Resources */,
 				50EF629917ECD46A001EB2F8 /* Icon-100.png in Resources */,
-				D89D78751B300A8E00A1D44A /* Game_Army.png in Resources */,
+				D89D78751B300A8E00A1D44A /* Game_Enemy.png in Resources */,
 				D8C069CD1B3013F300B45A50 /* Game_Background.png in Resources */,
 				5087E78317EB970100C73F5D /* Icon-152.png in Resources */,
 				46880B8119C43A67006E1F66 /* HelloWorld.png in Resources */,
@@ -578,16 +614,21 @@
 				521A8E6519F0C34300D177D7 /* Default-736h@3x.png in Resources */,
 				521A8EA919F11F5000D177D7 /* fonts in Resources */,
 				50EF62A317ECD613001EB2F8 /* Icon-50.png in Resources */,
+				D8C069EB1B309F6200B45A50 /* Help_Home_Button.png in Resources */,
+				D8C069EC1B309F6200B45A50 /* Help_Right_Button.png in Resources */,
+				D8C069E11B3086A100B45A50 /* Game_Restart_Button.png in Resources */,
 				5087E78017EB970100C73F5D /* Icon-114.png in Resources */,
 				50EF62A217ECD613001EB2F8 /* Icon-29.png in Resources */,
 				50EF629617ECD46A001EB2F8 /* Icon-40.png in Resources */,
 				D8FD540C1B2DDD3200DF0325 /* Game_Ball.png in Resources */,
 				5087E78217EB970100C73F5D /* Icon-144.png in Resources */,
 				3EACC98F19EE6D4300EB3C5E /* res in Resources */,
+				D8C069EA1B309F6200B45A50 /* Help_Left_Button.png in Resources */,
 				50EF629817ECD46A001EB2F8 /* Icon-80.png in Resources */,
 				5087E78417EB970100C73F5D /* Icon-57.png in Resources */,
 				5087E77E17EB970100C73F5D /* Default.png in Resources */,
 				521A8E6419F0C34300D177D7 /* Default-667h@2x.png in Resources */,
+				D8C069E01B3086A100B45A50 /* Game_Home_Button.png in Resources */,
 				D878DC531B1CF6180066BF85 /* Welcome_Start_Game_Button.png in Resources */,
 				D8FD540D1B2DDD3200DF0325 /* Game_Obstacle.png in Resources */,
 				46880B7B19C43A67006E1F66 /* CloseNormal.png in Resources */,
@@ -618,6 +659,7 @@
 			files = (
 				46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */,
 				46880B8A19C43A87006E1F66 /* HelloWorldScene.cpp in Sources */,
+				D8C069E51B309D4400B45A50 /* HelpScene.cpp in Sources */,
 				D878DC4A1B1CF0F90066BF85 /* WelcomeScene.cpp in Sources */,
 				D89D78731B2FB4A000A1D44A /* GamePlayerSprite.cpp in Sources */,
 				D8FD53FC1B2DC23E00DF0325 /* GameBackgroundLayer.cpp in Sources */,

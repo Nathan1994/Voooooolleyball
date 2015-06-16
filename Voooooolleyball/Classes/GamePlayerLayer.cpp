@@ -9,6 +9,7 @@
 #include "GamePlayerLayer.h"
 #include "ui/CocosGUI.h"
 #include "VisibleRect.h"
+#include "WelcomeScene.h"
 
 
 USING_NS_CC;
@@ -16,6 +17,7 @@ USING_NS_CC;
 static const int BALL_TAG = 0x00;
 static const int PLAYER_TAG = 0x01;
 static const int WALL_TAG = 0x11;
+static const int GROUND_TAG = 0x10;
 
 
 static bool isRight = false;
@@ -43,9 +45,11 @@ void GamePlayerLayer::onEnter(){
     configureTouchListener();
     
     configurePlayer();
+    configureEnemy();
     configureEdge();
     configureObstacle();
     configureBall();
+    configureButton();
     
     this->scheduleUpdate();
 
@@ -64,6 +68,29 @@ void GamePlayerLayer::update(float dt){
 }
 
 #pragma mark - UI Method
+
+void GamePlayerLayer::configureButton(){
+    Size visibleSize = VisibleRect::getVisibleRect().size;
+    Vec2 origin = Director::getInstance()->getVisibleOrigin();
+
+    auto restartButton = ui::Button::create("Game_Restart_Button.png");
+    restartButton->setAnchorPoint(Vec2(1,1));
+    Size buttonSize = restartButton->getCustomSize();
+    restartButton->setScale(visibleSize.height/10/buttonSize.height);
+    restartButton->setPosition(Vec2(visibleSize.width,visibleSize.height));
+    restartButton->addClickEventListener(CC_CALLBACK_1(GamePlayerLayer::restartButtenTouchEvent, this));
+    this->addChild(restartButton);
+    
+    auto homeButton = ui::Button::create("Game_Home_Button.png");
+    homeButton->setAnchorPoint(Vec2(0,1));
+    Size homeButtonSize = restartButton->getCustomSize();
+    homeButton->setScale(visibleSize.height/10/homeButtonSize.height);
+    homeButton->setPosition(Vec2(0,visibleSize.height));
+    homeButton->addClickEventListener(CC_CALLBACK_1(GamePlayerLayer::homeButtenTouchEvent, this));
+    this->addChild(homeButton);
+
+}
+
 void GamePlayerLayer::configurePhysicsContactListener(){
     auto contactListener = EventListenerPhysicsContact::create();
     contactListener->onContactBegin = CC_CALLBACK_1(GamePlayerLayer::onContactBegin, this);
@@ -72,8 +99,6 @@ void GamePlayerLayer::configurePhysicsContactListener(){
     _eventDispatcher->addEventListenerWithSceneGraphPriority(contactListener, this);
 }
 
-
-
 void GamePlayerLayer::configureTouchListener(){
     auto listener = EventListenerTouchOneByOne::create();
     listener->onTouchBegan = CC_CALLBACK_2(GamePlayerLayer::onTouchBegan, this);
@@ -81,6 +106,7 @@ void GamePlayerLayer::configureTouchListener(){
     listener->onTouchEnded = CC_CALLBACK_2(GamePlayerLayer::onTouchEnded, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener,this);
 }
+
 void GamePlayerLayer::configureObstacle(){
     auto obstacle = Node::create();
     obstacle->setAnchorPoint(Point(0.5,0));
@@ -92,22 +118,43 @@ void GamePlayerLayer::configureObstacle(){
 }
 
 void GamePlayerLayer::configureBall(){
+    if (ball) {
+        ball->removeFromParent();
+    }
+    
     ball = Sprite::create("Game_Ball.png");;
     float ballScale = (VisibleRect::getVisibleRect().size.height/6)/ball->getTextureRect().size.height;
     ball->setScale(ballScale);
-    ball->setPosition(Point(VisibleRect::getVisibleRect().size.width/4,VisibleRect::getVisibleRect().size.height - VisibleRect::getVisibleRect().size.height/6 ));
     auto body = PhysicsBody::createCircle(VisibleRect::getVisibleRect().size.height/12);
     body->setContactTestBitmask(1);
     body->setTag(BALL_TAG);
     ball->setPhysicsBody(body);
-    
+    ball->setPosition(Point(VisibleRect::getVisibleRect().size.width/5,VisibleRect::getVisibleRect().size.height - VisibleRect::getVisibleRect().size.height/6 ));
     this->addChild(ball);
+
+
 }
 
 void GamePlayerLayer::configurePlayer(){
-
-    player = GamePlayerSprite::create();
+    if (player) {
+        player->removeFromParent();
+    }
+    player = GamePlayerSprite::create("Game_Player.png");
+    player->setPosition(Point(VisibleRect::getVisibleRect().size.width/5,VisibleRect::getVisibleRect().size.height*(1-offsetScale)+1));
     this->addChild(player);
+
+
+}
+
+void GamePlayerLayer::configureEnemy(){
+    if (enemy) {
+        enemy->removeFromParent();
+    }
+    enemy = GamePlayerSprite::create("Game_Enemy.png");
+    enemy->setPosition(Point(4 * VisibleRect::getVisibleRect().size.width/5,VisibleRect::getVisibleRect().size.height*(1-offsetScale)+1));
+    this->addChild(enemy);
+
+
 }
 
 void GamePlayerLayer::configureEdge(){
@@ -117,10 +164,19 @@ void GamePlayerLayer::configureEdge(){
     wall->setPosition(Point(VisibleRect::center().x,VisibleRect::center().y + VisibleRect::getVisibleRect().size.height * (1-offsetScale)/2));
     auto body = PhysicsBody::createEdgeBox(Size(VisibleRect::getVisibleRect().size.width,VisibleRect::getVisibleRect().size.height * offsetScale), PHYSICSBODY_MATERIAL_DEFAULT, 3);
     body->setContactTestBitmask(1);
-    body->getShape(0)->setRestitution(0);
     body->setTag(WALL_TAG);
     wall->setPhysicsBody(body);
     this->addChild(wall);
+    
+    auto ground = Node::create();
+    ground->setPosition(Point(VisibleRect::center().x, VisibleRect::getVisibleRect().size.height * (1-offsetScale)));
+    auto groundBody = PhysicsBody::createEdgeBox(Size(VisibleRect::getVisibleRect().size.width,2), PHYSICSBODY_MATERIAL_DEFAULT, 3);
+    groundBody->setContactTestBitmask(1);
+    groundBody->setTag(GROUND_TAG);
+    ground->setPhysicsBody(groundBody);
+    this->addChild(ground);
+    
+    
     
 }
 
@@ -136,14 +192,30 @@ void GamePlayerLayer::hitBall(){
     }
 }
 
+void GamePlayerLayer::restart(){
+    configurePlayer();
+    configureEnemy();
+    configureBall();
+}
+
 #pragma mark - Listener Call Back
+
+void GamePlayerLayer::restartButtenTouchEvent(Ref* pSender){
+    restart();
+}
+
+void GamePlayerLayer::homeButtenTouchEvent(Ref* pSender){
+    Scene* welcomeScene = TransitionFade::create(1.0f, WelcomeScene::create());
+    Director::getInstance()->replaceScene(welcomeScene);
+}
+
 bool GamePlayerLayer::onContactBegin(PhysicsContact& contact){
     CCLOG("Contact Begin...");
     PhysicsBody* a = contact.getShapeA()->getBody();
     PhysicsBody* b = contact.getShapeB()->getBody();
     
     
-    if (a->getTag() == WALL_TAG || b->getTag() == WALL_TAG) {
+    if (a->getTag() == GROUND_TAG || b->getTag() == GROUND_TAG) {
         if (a->getTag() == PLAYER_TAG || b->getTag() == PLAYER_TAG) {
             player->isJump = false;
             float playerRotation = player->getRotation();
@@ -166,9 +238,12 @@ bool GamePlayerLayer::onContactBegin(PhysicsContact& contact){
     }
     
     
-    
-    
-    
+    if (a->getTag() == BALL_TAG || b->getTag() == BALL_TAG) {
+        if (a->getTag() == GROUND_TAG || b->getTag() == GROUND_TAG) {
+            this->runAction(Sequence::create(DelayTime::create(1),CallFuncN::create(CC_CALLBACK_0(GamePlayerLayer::restart,this)), NULL));
+        }
+    }
+
     return true;
 }
 
@@ -183,14 +258,15 @@ void GamePlayerLayer::onContactSeperate(PhysicsContact& contact){
             
         }
     }
+    
 }
+
 bool GamePlayerLayer::onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *unused_event) {
     CCLOG("Touch Begin...");
     
     
     return true;
 }
-
 
 void GamePlayerLayer::onTouchMoved(cocos2d::Touch *touch, cocos2d::Event *unused_event) {
     float deltaX,deltaY;
@@ -222,14 +298,10 @@ void GamePlayerLayer::onTouchMoved(cocos2d::Touch *touch, cocos2d::Event *unused
     }
 
 }
+
 void GamePlayerLayer::onTouchEnded(cocos2d::Touch *touch, cocos2d::Event *unused_event) {
     CCLOG("Touch End...");
     
     isMove = false;
     
 }
-
-
-
-
-

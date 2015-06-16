@@ -14,7 +14,7 @@ class GamePlayerSprite: public cocos2d::Sprite{
 public:
     void jump();
     void fall();
-    static GamePlayerSprite* create();
+    static GamePlayerSprite* create(const std::string& filename);
     bool isJump;
     void standup();
     bool isFall;
