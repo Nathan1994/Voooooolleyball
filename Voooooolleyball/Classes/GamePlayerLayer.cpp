@@ -24,7 +24,11 @@ static bool isRight = false;
 static bool isMove = false;
 static bool isContactBall = false;
 
-static Node *edgeNode = nullptr;
+static bool isEnemyRight = false;
+static bool isEnemyMove = false;
+static bool isEnemyContactBall = false;
+
+//static Node *edgeNode = nullptr;
 
 static float offsetScale = 0.87;
 
@@ -33,7 +37,6 @@ static float offsetScale = 0.87;
 
 
 bool GamePlayerLayer::init(){
-
 
 
     return true;
@@ -56,6 +59,9 @@ void GamePlayerLayer::onEnter(){
 }
 
 void GamePlayerLayer::update(float dt){
+    updateEnemy();
+    
+    
     if (isMove) {
         Vec2 position = player->getPosition();
         if (isRight) {
@@ -65,6 +71,17 @@ void GamePlayerLayer::update(float dt){
             player->setPosition(Vec2(position.x-7,position.y));
         }
     }
+    
+    if(isEnemyMove){
+        Vec2 position = enemy->getPosition();
+        if (isEnemyRight) {
+            enemy->setPosition(Vec2(position.x+7,position.y));
+        }
+        else{
+            enemy->setPosition(Vec2(position.x-7,position.y));
+        }
+    }
+    
 }
 
 #pragma mark - UI Method
@@ -111,7 +128,7 @@ void GamePlayerLayer::configureObstacle(){
     auto obstacle = Node::create();
     obstacle->setAnchorPoint(Point(0.5,0));
     obstacle->setPosition(Point(VisibleRect::bottom().x,VisibleRect::bottom().y+ VisibleRect::getVisibleRect().size.height * (1-offsetScale)));
-    obstacle->setPhysicsBody(PhysicsBody::createEdgeBox(Size(100,550)));
+    obstacle->setPhysicsBody(PhysicsBody::createEdgeBox(Size(100,500)));
     
     this->addChild(obstacle);
     
@@ -129,7 +146,9 @@ void GamePlayerLayer::configureBall(){
     body->setContactTestBitmask(1);
     body->setTag(BALL_TAG);
     ball->setPhysicsBody(body);
-    ball->setPosition(Point(VisibleRect::getVisibleRect().size.width/5,VisibleRect::getVisibleRect().size.height - VisibleRect::getVisibleRect().size.height/6 ));
+    ball->setPosition(Point(4*VisibleRect::getVisibleRect().size.width/5,VisibleRect::getVisibleRect().size.height - VisibleRect::getVisibleRect().size.height/6 ));
+//    ball->setPosition(Point(VisibleRect::center().x,VisibleRect::getVisibleRect().size.height - VisibleRect::getVisibleRect().size.height/6 ));
+//    body->setVelocity(Vec2(-500,-1000));
     this->addChild(ball);
 
 
@@ -140,7 +159,10 @@ void GamePlayerLayer::configurePlayer(){
         player->removeFromParent();
     }
     player = GamePlayerSprite::create("Game_Player.png");
-    player->setPosition(Point(VisibleRect::getVisibleRect().size.width/5,VisibleRect::getVisibleRect().size.height*(1-offsetScale)+1));
+//    player->setPosition(Point(VisibleRect::getVisibleRect().size.width/5,VisibleRect::getVisibleRect().size.height*(1-offsetScale)+1));
+    
+    player->setPosition(Point(VisibleRect::getVisibleRect().size.width/5,VisibleRect::center().y));
+
     this->addChild(player);
 
 
@@ -185,10 +207,10 @@ void GamePlayerLayer::configureEdge(){
 void GamePlayerLayer::hitBall(){
     
     if ((VisibleRect::getVisibleRect().size.width/2 - player->getPosition().x > 0)) {
-        ball->getPhysicsBody()->setVelocity(Vec2(1000,-1000));
+        ball->getPhysicsBody()->setVelocity(Vec2(1000,-300));
     }
     else{
-        ball->getPhysicsBody()->setVelocity(Vec2(-1000,-1000));
+        ball->getPhysicsBody()->setVelocity(Vec2(-1000,300));
     }
 }
 
@@ -303,5 +325,23 @@ void GamePlayerLayer::onTouchEnded(cocos2d::Touch *touch, cocos2d::Event *unused
     CCLOG("Touch End...");
     
     isMove = false;
+    
+}
+
+#pragma mark - Util
+
+void GamePlayerLayer::updateEnemy(){
+    
+
+    if (fabsf(ball->getPosition().x - enemy->getPosition().x) < 50) {
+        enemy->jump();
+    }
+    else if (ball->getPosition().x < VisibleRect::center().x){
+        isEnemyMove = false;
+    }
+    else if (ball->getPosition().x > VisibleRect::center().x){
+        isEnemyMove = true;
+    }
+    ball->getPosition().x < enemy->getPosition().x ? isEnemyRight = false : true;
     
 }

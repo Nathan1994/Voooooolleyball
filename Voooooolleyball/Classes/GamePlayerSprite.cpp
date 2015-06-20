@@ -13,7 +13,7 @@ USING_NS_CC;
 
 static float offsetScale = 0.87;
 static const int PLAYER_TAG = 0x01;
-
+static float playerOffsetScale = 0.2;
 
 
 
@@ -21,7 +21,7 @@ GamePlayerSprite* GamePlayerSprite::create(const std::string& filename){
     
     
     auto player = (GamePlayerSprite *)Sprite::create(filename);
-    float playerScale = (VisibleRect::getVisibleRect().size.height/3)/player->getTextureRect().size.height;
+    float playerScale = (VisibleRect::getVisibleRect().size.height*playerOffsetScale)/player->getTextureRect().size.height;
     player->setScale(playerScale);
     player->setAnchorPoint(Point(0.5,0));
     
@@ -42,7 +42,7 @@ GamePlayerSprite* GamePlayerSprite::create(const std::string& filename){
 void GamePlayerSprite::jump(){
     if (!isJump) {
         Vec2 speed = this->getPhysicsBody()->getVelocity();
-        this->getPhysicsBody()->setVelocity(Vec2(speed.x,700.0f));
+        this->getPhysicsBody()->setVelocity(Vec2(speed.x,800.0f));
         isJump = true;
     }
 }
