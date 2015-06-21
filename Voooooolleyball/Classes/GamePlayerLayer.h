@@ -47,6 +47,8 @@ private:
     void restartButtenTouchEvent(cocos2d::Ref* pSender);
     void homeButtenTouchEvent(Ref* pSender);
     void updateEnemy();
+    void showReady();
+    void start();
 };
 
 #endif /* defined(__Voooooolleyball__GamePlayerLayer__) */

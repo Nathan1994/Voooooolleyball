@@ -14,11 +14,11 @@
 
 USING_NS_CC;
 
-static const int BALL_TAG = 0x00;
-static const int PLAYER_TAG = 0x01;
-static const int WALL_TAG = 0x11;
-static const int GROUND_TAG = 0x10;
-
+static const int BALL_TAG = 0x000;
+static const int PLAYER_TAG = 0x001;
+static const int WALL_TAG = 0x011;
+static const int GROUND_TAG = 0x010;
+static const int ENEMY_TAG = 0x100;
 
 static bool isRight = false;
 static bool isMove = false;
@@ -28,9 +28,10 @@ static bool isEnemyRight = false;
 static bool isEnemyMove = false;
 static bool isEnemyContactBall = false;
 
-//static Node *edgeNode = nullptr;
-
 static float offsetScale = 0.87;
+
+static int leftWins = 0;
+static int rightWins = 0;
 
 
 #pragma mark - Init Method
@@ -55,7 +56,8 @@ void GamePlayerLayer::onEnter(){
     configureButton();
     
     this->scheduleUpdate();
-
+    
+    showReady();
 }
 
 void GamePlayerLayer::update(float dt){
@@ -145,10 +147,11 @@ void GamePlayerLayer::configureBall(){
     auto body = PhysicsBody::createCircle(VisibleRect::getVisibleRect().size.height/12);
     body->setContactTestBitmask(1);
     body->setTag(BALL_TAG);
+    body->setGravityEnable(false);
     ball->setPhysicsBody(body);
-    ball->setPosition(Point(4*VisibleRect::getVisibleRect().size.width/5,VisibleRect::getVisibleRect().size.height - VisibleRect::getVisibleRect().size.height/6 ));
-//    ball->setPosition(Point(VisibleRect::center().x,VisibleRect::getVisibleRect().size.height - VisibleRect::getVisibleRect().size.height/6 ));
-//    body->setVelocity(Vec2(-500,-1000));
+//    ball->setPosition(Point(4*VisibleRect::getVisibleRect().size.width/5,VisibleRect::getVisibleRect().size.height - VisibleRect::getVisibleRect().size.height/6 ));
+    ball->setPosition(Point(VisibleRect::getVisibleRect().size.width/5,VisibleRect::getVisibleRect().size.height - VisibleRect::getVisibleRect().size.height/6 ));
+
     this->addChild(ball);
 
 
@@ -160,7 +163,7 @@ void GamePlayerLayer::configurePlayer(){
     }
     player = GamePlayerSprite::create("Game_Player.png");
 //    player->setPosition(Point(VisibleRect::getVisibleRect().size.width/5,VisibleRect::getVisibleRect().size.height*(1-offsetScale)+1));
-    
+    player->getPhysicsBody()->setTag(PLAYER_TAG);
     player->setPosition(Point(VisibleRect::getVisibleRect().size.width/5,VisibleRect::center().y));
 
     this->addChild(player);
@@ -173,9 +176,9 @@ void GamePlayerLayer::configureEnemy(){
         enemy->removeFromParent();
     }
     enemy = GamePlayerSprite::create("Game_Enemy.png");
-    enemy->setPosition(Point(4 * VisibleRect::getVisibleRect().size.width/5,VisibleRect::getVisibleRect().size.height*(1-offsetScale)+1));
+    enemy->getPhysicsBody()->setTag(ENEMY_TAG);
+    enemy->setPosition(Point(4 * VisibleRect::getVisibleRect().size.width/5,VisibleRect::center().y));
     this->addChild(enemy);
-
 
 }
 
@@ -215,9 +218,28 @@ void GamePlayerLayer::hitBall(){
 }
 
 void GamePlayerLayer::restart(){
+    showReady();
     configurePlayer();
     configureEnemy();
     configureBall();
+    leftWins = 0;
+    rightWins = 0;
+}
+
+void GamePlayerLayer::start(){
+    ball->getPhysicsBody()->setGravityEnable(true);
+}
+
+void GamePlayerLayer::showReady(){
+    auto readyLabel = Label::createWithSystemFont("Ready!", "Arial", 180);
+    readyLabel->setPosition(VisibleRect::center());
+    readyLabel->setColor(Color3B::BLACK);
+    this->addChild(readyLabel);
+    
+    auto fadeOut = FadeOut::create(0.5);
+//    readyLabel->runAction(fadeOut);
+    readyLabel->runAction(Sequence::create(DelayTime::create(0.5),fadeOut,CallFuncN::create(CC_CALLBACK_0(GamePlayerLayer::start,this)), NULL));
+    
 }
 
 #pragma mark - Listener Call Back
@@ -247,6 +269,16 @@ bool GamePlayerLayer::onContactBegin(PhysicsContact& contact){
         }
     }
     
+    if (a->getTag() == GROUND_TAG || b->getTag() == GROUND_TAG) {
+        if (a->getTag() == ENEMY_TAG || b->getTag() == ENEMY_TAG) {
+            enemy->isJump = false;
+            float playerRotation = enemy->getRotation();
+            if (fabsf(playerRotation) > 5 && !enemy->isFall) {
+                enemy->standup();
+            }
+        }
+    }
+    
     if (a->getTag() == BALL_TAG || b->getTag() == BALL_TAG) {
         if (a->getTag() == PLAYER_TAG || b->getTag() == PLAYER_TAG) {
             
@@ -259,13 +291,28 @@ bool GamePlayerLayer::onContactBegin(PhysicsContact& contact){
         }
     }
     
+    if (a->getTag() == BALL_TAG || b->getTag() == BALL_TAG) {
+        if (a->getTag() == ENEMY_TAG || b->getTag() == ENEMY_TAG) {
+            isEnemyContactBall = true;
+            
+            int boost = 700;
+            Vec2 ballVelocity = ball->getPhysicsBody()->getVelocity();
+            float sqrt = sqrtf(ballVelocity.x * ballVelocity.x + ballVelocity.y * ballVelocity.y);
+            ball->getPhysicsBody()->setVelocity(Vec2(-ballVelocity.x/sqrt * boost,-ballVelocity.y/sqrt * boost));
+            
+            if (enemy->isJump) {
+                hitBall();
+            }
+        }
+    }
+    
     
     if (a->getTag() == BALL_TAG || b->getTag() == BALL_TAG) {
         if (a->getTag() == GROUND_TAG || b->getTag() == GROUND_TAG) {
             this->runAction(Sequence::create(DelayTime::create(1),CallFuncN::create(CC_CALLBACK_0(GamePlayerLayer::restart,this)), NULL));
         }
     }
-
+    
     return true;
 }
 

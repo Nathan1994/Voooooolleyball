@@ -11,8 +11,8 @@
 
 USING_NS_CC;
 
-static float offsetScale = 0.87;
-static const int PLAYER_TAG = 0x01;
+//static float offsetScale = 0.87;
+//static const int PLAYER_TAG = 0x01;
 static float playerOffsetScale = 0.2;
 
 
@@ -29,7 +29,7 @@ GamePlayerSprite* GamePlayerSprite::create(const std::string& filename){
     
     body->setContactTestBitmask(1);
     player->setPhysicsBody(body);
-    player->getPhysicsBody()->setTag(PLAYER_TAG);
+
     
 
     
