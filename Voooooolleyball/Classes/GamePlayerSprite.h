@@ -18,9 +18,9 @@ public:
     bool isJump;
     void standup();
     bool isFall;
+    cocos2d::Size* getPlayerSize();
     
 private:
-    void update(float dt) override;
     void fallDidFinished();
 };
 

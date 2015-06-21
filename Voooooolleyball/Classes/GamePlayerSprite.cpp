@@ -39,6 +39,13 @@ GamePlayerSprite* GamePlayerSprite::create(const std::string& filename){
 
 }
 
+Size* GamePlayerSprite::getPlayerSize(){
+    float playerScale = (VisibleRect::getVisibleRect().size.height*playerOffsetScale)/this->getTextureRect().size.height;
+    Size playerSize = Size(this->getTextureRect().size.width * playerScale, this->getTextureRect().size.height * playerScale);
+    return &playerSize;
+
+}
+
 void GamePlayerSprite::jump(){
     if (!isJump) {
         Vec2 speed = this->getPhysicsBody()->getVelocity();
@@ -64,7 +71,3 @@ void GamePlayerSprite::fallDidFinished(){
     this->isFall = false;
 }
 
-void GamePlayerSprite::update(float dt){
-
-    
-}

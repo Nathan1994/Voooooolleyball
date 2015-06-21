@@ -16,7 +16,7 @@ GameBackgroundLayer* GameScene::backgroundLayer = nullptr;
 Scene* GameScene::create()
 {
     gameScene = Scene::createWithPhysics();
-//    gameScene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
+    gameScene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
     gameScene->getPhysicsWorld()->setGravity(Vec2(0,-980.0f));
     
     backgroundLayer = GameBackgroundLayer::create();

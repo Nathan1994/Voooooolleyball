@@ -41,6 +41,8 @@ Label *rightWinLabel = nullptr;
 
 static bool isRightLastWin = false;
 
+static Size *playerSize = nullptr;
+
 #pragma mark - Init Method
 
 
@@ -78,14 +80,26 @@ void GamePlayerLayer::update(float dt){
             player->setPosition(Vec2(position.x+7,position.y));
         }
         else{
-            player->setPosition(Vec2(position.x-7,position.y));
+            if (player->getPosition().x <= 30) {
+                player->setPosition(Vec2(position.x,position.y));
+            }
+            else{
+                player->setPosition(Vec2(position.x-7,position.y));
+            }
+            
         }
     }
     
     if(isEnemyMove){
         Vec2 position = enemy->getPosition();
         if (isEnemyRight) {
-            enemy->setPosition(Vec2(position.x+7,position.y));
+            if (enemy->getPosition().x >= VisibleRect::getVisibleRect().size.width - 30) {
+                enemy->setPosition(Vec2(position.x,position.y));
+            }
+            else{
+                enemy->setPosition(Vec2(position.x+7,position.y));
+            }
+            
         }
         else{
             enemy->setPosition(Vec2(position.x-7,position.y));
@@ -152,7 +166,8 @@ void GamePlayerLayer::configureObstacle(){
     auto obstacle = Node::create();
     obstacle->setAnchorPoint(Point(0.5,0));
     obstacle->setPosition(Point(VisibleRect::bottom().x,VisibleRect::bottom().y+ VisibleRect::getVisibleRect().size.height * (1-offsetScale)));
-    auto body = PhysicsBody::createEdgeBox(Size(100,500));
+    auto body = PhysicsBody::createBox(Size(100,500));
+    body->setDynamic(false);
     body->setContactTestBitmask(0);
     body->setCategoryBitmask(WALL_TAG);
     body->setCollisionBitmask(WALL_TAG);
@@ -163,8 +178,9 @@ void GamePlayerLayer::configureObstacle(){
     auto highObstacle = Node::create();
     highObstacle->setAnchorPoint(Point(0.5,0));
     highObstacle->setPosition(Point(VisibleRect::bottom().x,VisibleRect::bottom().y+ VisibleRect::getVisibleRect().size.height * (1-offsetScale)));
-    auto highObstacleBody = PhysicsBody::createEdgeBox(Size(100,VisibleRect::getVisibleRect().size.height *2));
+    auto highObstacleBody = PhysicsBody::createBox(Size(100,VisibleRect::getVisibleRect().size.height *2));
     highObstacleBody->setTag(OBSTACLE_TAG);
+    highObstacleBody->setDynamic(false);
     highObstacleBody->setContactTestBitmask(0);
     highObstacleBody->setCategoryBitmask(OBSTACLE_TAG);
     highObstacleBody->setCollisionBitmask(OBSTACLE_TAG);
