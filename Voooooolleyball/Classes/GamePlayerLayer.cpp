@@ -187,8 +187,8 @@ void GamePlayerLayer::configureBall(){
     body->setCategoryBitmask(BALL_TAG);
     body->setCollisionBitmask(BALL_TAG);
     body->setTag(BALL_TAG);
-    body->setGravityEnable(false);
     ball->setPhysicsBody(body);
+    ball->getPhysicsBody()->setGravityEnable(false);
     if (isRightLastWin) {
         ball->setPosition(Point(VisibleRect::getVisibleRect().size.width/5,VisibleRect::getVisibleRect().size.height - VisibleRect::getVisibleRect().size.height/6 ));
     }
