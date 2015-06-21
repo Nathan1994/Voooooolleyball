@@ -49,6 +49,8 @@ private:
     void updateEnemy();
     void showReady();
     void start();
+    void updateWinCount();
+    void configureWinCountLabel();
 };
 
 #endif /* defined(__Voooooolleyball__GamePlayerLayer__) */

@@ -33,6 +33,8 @@ static float offsetScale = 0.87;
 static int leftWins = 0;
 static int rightWins = 0;
 
+Label *leftWinLabel = nullptr;
+Label *rightWinLabel = nullptr;
 
 #pragma mark - Init Method
 
@@ -54,6 +56,7 @@ void GamePlayerLayer::onEnter(){
     configureObstacle();
     configureBall();
     configureButton();
+    configureWinCountLabel();
     
     this->scheduleUpdate();
     
@@ -88,6 +91,20 @@ void GamePlayerLayer::update(float dt){
 
 #pragma mark - UI Method
 
+void GamePlayerLayer::configureWinCountLabel(){
+    leftWinLabel = Label::createWithSystemFont("Score: 0", "Arial", 40);
+    leftWinLabel->setAnchorPoint(Vec2(0,1));
+    leftWinLabel->setColor(Color3B::BLACK);
+    leftWinLabel->setPosition(Point(VisibleRect::leftTop().x+20,VisibleRect::leftTop().y-20));
+    this->addChild(leftWinLabel);
+    
+    rightWinLabel = Label::createWithSystemFont("Score: 0", "Arial", 40);
+    rightWinLabel->setAnchorPoint(Vec2(1,1));
+    rightWinLabel->setColor(Color3B::BLACK);
+    rightWinLabel->setPosition(Point(VisibleRect::rightTop().x-20,VisibleRect::rightTop().y-20));
+    this->addChild(rightWinLabel);
+}
+
 void GamePlayerLayer::configureButton(){
     Size visibleSize = VisibleRect::getVisibleRect().size;
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
@@ -96,7 +113,7 @@ void GamePlayerLayer::configureButton(){
     restartButton->setAnchorPoint(Vec2(1,1));
     Size buttonSize = restartButton->getCustomSize();
     restartButton->setScale(visibleSize.height/10/buttonSize.height);
-    restartButton->setPosition(Vec2(visibleSize.width,visibleSize.height));
+    restartButton->setPosition(Point(VisibleRect::top().x+80,VisibleRect::top().y-5));
     restartButton->addClickEventListener(CC_CALLBACK_1(GamePlayerLayer::restartButtenTouchEvent, this));
     this->addChild(restartButton);
     
@@ -104,7 +121,7 @@ void GamePlayerLayer::configureButton(){
     homeButton->setAnchorPoint(Vec2(0,1));
     Size homeButtonSize = restartButton->getCustomSize();
     homeButton->setScale(visibleSize.height/10/homeButtonSize.height);
-    homeButton->setPosition(Vec2(0,visibleSize.height));
+    homeButton->setPosition(Point(VisibleRect::top().x-80,VisibleRect::top().y-5));
     homeButton->addClickEventListener(CC_CALLBACK_1(GamePlayerLayer::homeButtenTouchEvent, this));
     this->addChild(homeButton);
 
@@ -190,6 +207,7 @@ void GamePlayerLayer::configureEdge(){
     auto body = PhysicsBody::createEdgeBox(Size(VisibleRect::getVisibleRect().size.width,VisibleRect::getVisibleRect().size.height * offsetScale), PHYSICSBODY_MATERIAL_DEFAULT, 3);
     body->setContactTestBitmask(1);
     body->setTag(WALL_TAG);
+    body->getShape(0)->setRestitution(0);
     wall->setPhysicsBody(body);
     this->addChild(wall);
     
@@ -198,6 +216,7 @@ void GamePlayerLayer::configureEdge(){
     auto groundBody = PhysicsBody::createEdgeBox(Size(VisibleRect::getVisibleRect().size.width,2), PHYSICSBODY_MATERIAL_DEFAULT, 3);
     groundBody->setContactTestBitmask(1);
     groundBody->setTag(GROUND_TAG);
+    groundBody->getShape(0)->setRestitution(0);
     ground->setPhysicsBody(groundBody);
     this->addChild(ground);
     
@@ -218,12 +237,11 @@ void GamePlayerLayer::hitBall(){
 }
 
 void GamePlayerLayer::restart(){
-    showReady();
     configurePlayer();
     configureEnemy();
     configureBall();
-    leftWins = 0;
-    rightWins = 0;
+    updateWinCount();
+    showReady();
 }
 
 void GamePlayerLayer::start(){
@@ -245,6 +263,8 @@ void GamePlayerLayer::showReady(){
 #pragma mark - Listener Call Back
 
 void GamePlayerLayer::restartButtenTouchEvent(Ref* pSender){
+    leftWins = 0;
+    rightWins = 0;
     restart();
 }
 
@@ -309,6 +329,12 @@ bool GamePlayerLayer::onContactBegin(PhysicsContact& contact){
     
     if (a->getTag() == BALL_TAG || b->getTag() == BALL_TAG) {
         if (a->getTag() == GROUND_TAG || b->getTag() == GROUND_TAG) {
+            if (ball->getPosition().x - VisibleRect::center().x < 0) {
+                rightWins++;
+            }
+            else{
+                leftWins++;
+            }
             this->runAction(Sequence::create(DelayTime::create(1),CallFuncN::create(CC_CALLBACK_0(GamePlayerLayer::restart,this)), NULL));
         }
     }
@@ -390,5 +416,11 @@ void GamePlayerLayer::updateEnemy(){
         isEnemyMove = true;
     }
     ball->getPosition().x < enemy->getPosition().x ? isEnemyRight = false : true;
+    
+}
+
+void GamePlayerLayer::updateWinCount(){
+    leftWinLabel->setString(StringUtils::format("Score: %d",leftWins));
+    rightWinLabel->setString(StringUtils::format("Score: %d",rightWins));
     
 }
